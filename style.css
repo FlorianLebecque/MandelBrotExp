@@ -1,0 +1,15 @@
+.main{
+    margin-top: 5em;
+}
+
+nav{
+    box-shadow: 3px 2px 40px 0px rgba(0,0,0,0.2);
+}
+
+.panel{
+    width: 100%;
+    box-shadow: 3px 2px 40px 0px rgba(0,0,0,0.2);
+    border-radius: 0.5em;
+    padding: 1em;
+    margin-bottom: 2em;
+}
