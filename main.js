@@ -180,3 +180,31 @@ function btnClick(){
 
         });
 }
+
+
+function GetyImg(){
+    const imageUrl = 'https://localhost:7138/Mandelbrot?from='+from_v+'&to='+to_v+'&step='+step_v+'&iter='+iter_v;
+
+    (async () => {
+      const response = await fetch(imageUrl)
+      const imageBlob = await response.blob()
+      const reader = new FileReader();
+      reader.readAsDataURL(imageBlob);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        pg = loadImage(base64data);
+      }
+
+        let w = Utils.elementWidth(p5Div);
+
+        let diff_x = to_v.split(':')[0] - from_v.split(':')[0];
+        let diff_y = to_v.split(':')[1] - from_v.split(':')[1];
+        
+        ratio = diff_y/diff_x;
+        h =  (w/step_v) ;
+        
+        resizeCanvas(w, w * ratio);
+        c_from = null;
+
+    })()
+}
