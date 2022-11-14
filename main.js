@@ -34,8 +34,21 @@ function draw() {
         if(global_Data){
             for(let i = 0; i < global_Data.length;i++){
                 for(let j = 0;j < global_Data[i].length;j++){
-                    pg.fill(global_Data[i][j]*255)
-                    pg.rect(i*h,j*(h*ratio),h,h*ratio);
+
+                    var bright = map(global_Data[i][j], 0, parseInt(iter.value), 0, 1);
+                    var angle = map(bright,0,1,0,TWO_PI);
+
+                    bright = map((bright)**2, 0, 1, 0, 100);
+                    hue    = map(sin(angle), 0, 1, 0,360 );
+
+                    if (global_Data[i][j] == parseInt(iter.value)) {
+                        bright = 0;
+                        hue = 0;
+                    }
+
+                    pg.colorMode(HSB, 360,100,100);
+                    pg.fill(hue,100,bright);
+                    pg.rect(i*h,j*(h),h,h);
                 }
             }
         }
@@ -60,7 +73,6 @@ function draw() {
             fill(0,0,0,0);
             rect(xy1[0],xy1[1],mouseX-xy1[0],mouseY-xy1[1]);
         }
-
     }
     
 }
@@ -169,7 +181,7 @@ function btnClick(){
             let diff_y = to_v.split(':')[1] - from_v.split(':')[1];
             
             ratio = diff_y/diff_x;
-            h =  (w/step_v) ;
+            h =  (w/step_v);
             
             resizeCanvas(w, w * ratio);
             pg = createGraphics(w, w * ratio);
