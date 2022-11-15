@@ -5,6 +5,7 @@ var res   = document.getElementById("res");
 var from  = document.getElementById("from");
 var to    = document.getElementById("to");
 var iter  = document.getElementById("iter");
+var split_e  = document.getElementById("split");
   
 var global_Data = null;
 var change = false;
@@ -168,8 +169,9 @@ function btnClick(){
     let from_v  = from.value;
     let to_v    = to.value;
     let iter_v  = iter.value;
+    let split_v = split_e.value;
 
-    fetch('https://localhost:7138/Mandelbrot?from='+from_v+'&to='+to_v+'&step='+step_v+'&iter='+iter_v,opts)
+    fetch('https://localhost:7138/Mandelbrot?from='+from_v+'&to='+to_v+'&step='+step_v+'&iter='+iter_v + '&split='+split_v,opts)
         .then((response) => response.json())
         .then((data) => {
 
