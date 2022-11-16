@@ -30,33 +30,10 @@ function draw() {
 
     if(change){
         
-        pg.noStroke();
-        pg.background(42);
-        if(global_Data){
-            for(let i = 0; i < global_Data.length;i++){
-                for(let j = 0;j < global_Data[i].length;j++){
-
-                    var bright = map(global_Data[i][j], 0, parseInt(iter.value), 0, 1);
-                    var angle = map(bright,0,1,0,TWO_PI);
-
-                    bright = map((bright)**2, 0, 1, 0, 100);
-                    hue    = map(sin(angle), 0, 1, 0,360 );
-
-                    if (global_Data[i][j] == parseInt(iter.value)) {
-                        bright = 0;
-                        hue = 0;
-                    }
-
-                    pg.colorMode(HSB, 360,100,100);
-                    pg.fill(hue,100,bright);
-                    pg.rect(i*h,j*(h),h,h);
-                }
-            }
-        }
-        change = false;
+        
     }
 
-    if(pg){
+    if((pg)&&(!change)){
         image(pg,0,0);
     }
 
@@ -78,41 +55,7 @@ function draw() {
     
 }
 
-function XYToComplex(x,y){
-    let res_v   = res.value; 
-    let from_v  = from.value;
-    let to_v    = to.value;
 
-
-    let wi = Utils.elementWidth(p5Div);
-    let he = wi*ratio ;
-
-
-    let r = map(x,0,wi,parseFloat(from_v.split(':')[0]),parseFloat(to_v.split(':')[0]));
-    let i = map(y,0,he,parseFloat(from_v.split(':')[1]),parseFloat(to_v.split(':')[1]));
-
-   // r = parseFloat(from_v.split(':')[0]) + ( ((x)/(wi)) * (diff_x));
-
-
-    return [r,i];
-}
-
-function CtoXY(c){  
-    let res_v   = res.value; 
-    let from_v  = from.value;
-    let to_v    = to.value;
-
-    
-
-    let wi = Utils.elementWidth(p5Div);
-    let he = wi*ratio ;
-
-
-    let x = map(c[0],from_v.split(':')[0],to_v.split(':')[0],0,wi);
-    let y = map(c[1],from_v.split(':')[1],to_v.split(':')[1],0,he);
-
-    return [x,y];
-}
 
 function mouseClicked(){
 
@@ -156,7 +99,12 @@ function mouseClicked(){
     }
 }
 
+
 function btnClick(){
+
+
+    document.getElementById("mandelCanvas").hidden = true;
+    document.getElementById("wait").hidden = false;
 
     var opts = {
         headers: {
@@ -175,6 +123,9 @@ function btnClick(){
         .then((response) => response.json())
         .then((data) => {
 
+            document.getElementById("mandelCanvas").hidden = false;
+            document.getElementById("wait").hidden = true;
+
             global_Data = data.points;
 
             let w = Utils.elementWidth(p5Div);
@@ -191,6 +142,31 @@ function btnClick(){
 
             c_from = null;
             c_to = null;
+
+            pg.noStroke();
+            pg.background(42);
+            if(global_Data){
+                for(let i = 0; i < global_Data.length;i++){
+                    for(let j = 0;j < global_Data[i].length;j++){
+
+                        var bright = map(global_Data[i][j], 0, parseInt(iter.value), 0, 1);
+                        var angle = map(bright,0,1,0,TWO_PI);
+
+                        bright = map((bright)**2, 0, 1, 0, 100);
+                        hue    = map(sin(angle), 0, 1, 0,360 );
+
+                        if (global_Data[i][j] == parseInt(iter.value)) {
+                            bright = 0;
+                            hue = 0;
+                        }
+
+                        pg.colorMode(HSB, 360,100,100);
+                        pg.fill(hue,100,bright);
+                        pg.rect(i*h,j*(h),h,h);
+                    }
+                }
+            }
+            change = false;
 
         });
 }

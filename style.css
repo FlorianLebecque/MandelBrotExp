@@ -14,6 +14,8 @@ nav a:hover{
     color:darkslategray;
 }
 
+
+
 .panel{
     width: 100%;
     box-shadow: 3px 2px 40px 0px rgba(0,0,0,0.2);
@@ -21,3 +23,39 @@ nav a:hover{
     padding: 1em;
     margin-bottom: 2em;
 }
+
+#mandelCanvas{
+    display: block;
+}
+
+#wait{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+}
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 128px;
+    height: 128px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: rgb(13, 111, 255) transparent rgb(13, 111, 255) transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+  }
